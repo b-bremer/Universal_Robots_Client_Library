@@ -23,13 +23,10 @@ filegroup(
     ],
 )
 
-COMMON_OPTIONS = [
-    "-Iinclude",
-]
+DEFAULT_OPTIONS = ["-fexceptions"]
 
-DEFAULT_OPTIONS = COMMON_OPTIONS + ["-fexceptions"]
-
-PEDANTIC_OPTIONS = DEFAULT_OPTIONS + [
+PEDANTIC_OPTIONS = [
+    "-fexceptions",
     "-Wall",
     "-pedantic",
 ]
@@ -45,10 +42,10 @@ cc_library(
         [
             "include/**/*.h",
         ],
-        exclude = [],
     ),
     copts = PEDANTIC_OPTIONS,
     features = ["-use_header_modules"],  # Incompatible with -fexceptions.
+    includes = ["include"],
 )
 
 cc_binary(
