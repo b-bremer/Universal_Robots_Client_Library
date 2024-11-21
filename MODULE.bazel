@@ -1,5 +1,3 @@
-# TODO(halbrock): Doc
-
 module(
     name = "universal_robots_client_library",
     version = "1.4.0",
