@@ -1,18 +1,42 @@
-# load("//tools/build_defs/license:license.bzl", "license")
+load("@rules_license//rules:license.bzl", "license")
 
-# package(
-#     default_applicable_licenses = [":license"],
-# )
+package(
+    default_applicable_licenses = [":license". ":license-bsd", ":license_zlib"],
+)
 
-# license(name = "license")
 
-# # Legacy deprecated licenses rule.
-# # Should be kept until transition to new license rules is complete.
-# licenses(["notice"])
+exports_files([
+    "LICENSE_apache_2_0",
+    "include/ur_client_library/queue/LICENSE.md",
+    "include/ur_client_library/queue/atomicops.h",
+])
 
-# exports_files([
-#     "LICENSE",
-# ])
+license(
+    name = "license",
+    package_name = "universal-robots-client-library",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+    license_text = "LICENSE_apache_2_0",
+)
+
+license(
+    name = "license-bsd",
+    package_name = "universal-robots-client-library",
+    license_kinds = [
+        "@rules_license//licenses/spdx:BSD-2-Clause",
+    ],
+    license_text = "include/ur_client_library/queue/LICENSE.md",
+)
+
+license(
+    name = "license_zlib",
+    package_name = "universal-robots-client-library",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Zlib",
+    ],
+    license_text = "include/ur_client_library/queue/atomicops.h",
+)
 
 filegroup(
     name = "rtde_files",
@@ -46,6 +70,7 @@ cc_library(
     copts = PEDANTIC_OPTIONS,
     features = ["-use_header_modules"],  # Incompatible with -fexceptions.
     includes = ["include"],
+    linkopts = ["-lpthread"],
 )
 
 cc_binary(
